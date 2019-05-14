@@ -14,20 +14,23 @@ class TestTsvNotes(unittest.TestCase):
     """
 
     test_file = "test.tsv"
-    columns=("theme", "date", "subtheme", "title", "chapter", "note")
+    #columns=("theme", "date", "subtheme", "title", "chapter", "note")
+    columns = ("title", "date", "note")
 
     def setUp(self):
-        self.tnotes = TNotes(notes_file=self.test_file,
-                columns=self.columns)
+        #self.tnotes = TNotes(notes_file=self.test_file,
+        #        columns=self.columns)
 
     def tearDown(self):
-        os.remove(self.test_file)
+        #os.remove(self.test_file)
 
     def test_minimal_write(self):
         """
         write minimal note to empty tsv
         test that it got 1 note entry
         """
+        write_flags = {}
+        self.tnotes = TNotes(notes_file=self.test_file)
         self.tnotes.write_note("this is a test note")
         notes = self.tnotes.get_all_notes()
         self.assertEqual(len(notes), 1)
