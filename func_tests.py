@@ -3,7 +3,7 @@
 import subprocess
 import unittest
 
-TNOTES = "/home/grail/projects/tnotes/tnotes.py"
+TNOTES = "/home/grail/projects/tnotes/tnotes"
 
 def run_cmd(args):
     proc = subprocess.Popen(args,
@@ -103,6 +103,31 @@ class TestTnotes(unittest.TestCase):
         self.assertEqual(b"", err)
         self.assertIn("good", str(out))
 
+    def test_replace_n_line(self):
+        # user creates a note with 3 lines
+        title = "multiline note to replace"
+        args = [TNOTES, title, "-w", "old text"]
+        results = [run_cmd(args) for _ in range (3)]
+        for res in results:
+            out, err = res
+            self.assertEqual(b"", err)
+            self.assertIn("old", str(out))
+
+        # user changes second line
+        args = [TNOTES, title, "1", "-wr", "new text"]
+        out, err = run_cmd(args)
+        self.assertEqual(b"", err)
+
+        # user reads new note
+        args = args[:2]
+        out, err  = run_cmd(args)
+        self.assertIn("new", str(out))
+
+        # user deletes that note alltogether
+        args = [TNOTES, "multiline note to replace", "-d"]
+        out, err = run_cmd(args)
+        self.assertEqual(b"", err) 
+
     def test_delete_note(self):
         # user creates bad note
         args = [TNOTES, "bad note to delete", "-w",
@@ -122,7 +147,31 @@ class TestTnotes(unittest.TestCase):
         self.assertEqual(b"", err)
         self.assertNotIn("bad note to delete", str(out))
 
+    def test_delete_n_line(self):
+        # user creates multiline bad note
+        args = [TNOTES, "multibad", "-w", "I am the worst"]
+        results = [run_cmd(args) for _ in range(3)]
+        for res in results:
+            self.assertEqual(b"", res[1])
 
+        # user checks that 3 lines created
+        rargs = [TNOTES, "multibad"]
+        out, err = run_cmd(rargs)
+        self.assertEqual(3, str(out).count("worst"))
+
+        # user deleted n line
+        args = [TNOTES, "multibad", "1", "-d"]
+        _, err = run_cmd(args)
+        self.assertEqual(b"", err)
+
+        # user checks that only two lines left
+        out, _ = run_cmd(rargs)
+        self.assertEqual(2, str(out).count("worst"))
+
+        # user deletes all multibad notes
+        args = [TNOTES, "multibad", "-d"]
+        _, err = run_cmd(args)
+        self.assertEqual(b"", err)
 
 if __name__ == "__main__":
     unittest.main()

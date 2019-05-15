@@ -37,6 +37,12 @@ def init_flags():
         help="when given uses promt to get input from user to add a note"
     )
     parser.add_argument(
+        "-is",
+        dest="inter_split",
+        action="store_true",
+        help="same as interactive mode but splits each line in individual note line/index"
+    )
+    parser.add_argument(
         "-d",
         dest="delete_mode",
         action="store_true",
@@ -94,6 +100,22 @@ class TNotes:
             print(note_text)
             return
 
+        elif "interactive_mode" in arg_di and arg_di["interactive_mode"]:
+            note_text = self.get_input()
+            if "date" in self.columns:
+                nav_di["date"] = dt.datetime.now().isoformat()
+            self.write_note(note_text=note_text, **nav_di)
+            print(note_text)
+            return
+
+        elif "inter_split" in arg_di and arg_di["inter_split"]:
+            text = self.get_input()
+            text_lines = text.splitlines()
+            nav_di["date"] = dt.datetime.now().isoformat()
+            for line in text_lines:
+                self.write_note(line, **nav_di)
+            return
+                            
         elif "replace_mode" in arg_di and arg_di["replace_mode"]:
             note_text = arg_di["replace_mode"]
             nav_di["note"] = note_text
@@ -127,8 +149,10 @@ class TNotes:
         """returns list of titles"""
         # read/update data
         self.get_tsv_data()
-        print({row["title"] for row in self.data_tsv})
-        return {row["title"] for row in self.data_tsv}
+        titles = {row["title"] for row in self.data_tsv}
+        for title in titles:
+            print(title)
+        return titles
 
 
     def write_note(self, note_text, **kwargs):
@@ -152,12 +176,48 @@ class TNotes:
             print("error: no title given")
         filtered = [row for row in self.data_tsv
                     if row["title"] != row_dict["title"]]
+
         # add new note to cleared notes
-        if "note" in row_dict:
-            if "date" in self.columns:
-                row_dict["date"] = dt.datetime.now().isoformat()
-            filtered.append(row_dict)
-        # write it
+        def append_if_note(row_di):
+            if "note" in row_di:
+                if "date" in self.columns:
+                    row_di["date"] = dt.datetime.now().isoformat()
+                filtered.append(row_di)
+
+        if self.index_to_return:
+            # find note to edit (actually needed only if index is given)
+            target_rows = [row for row in self.data_tsv
+                    if row["title"] == row_dict["title"]]
+            if ":" not in self.index_to_return:
+                try:
+                    self.index_to_return = int(self.index_to_return)
+                    assert len(target_rows) > self.index_to_return
+                except (AssertionError, ValueError):
+                    print("given index is not valid:",
+                            self.index_to_return)
+                target_rows[self.index_to_return] = row_dict
+                
+            else: # multiindex
+                try:
+                    start_index, end_index = self.index_to_return.split(":")
+                    start_index, end_index = int(start_index), int(end_index)
+                    assert len(target_rows) > start_index
+                    assert len(target_rows) > end_index
+                except (AssertionError, ValueError):
+                    print("given index is not valid:",
+                            self.index_to_return)
+                    target_rows[start_index:end_index] = row_dict
+
+            # return updated note to all notes
+            # if there is actual note, otherwise it stays deleted
+            for row_dict in target_rows:
+                append_if_note(row_dict)
+
+        # no index given, replace/delete whole note
+        else:
+            append_if_note(row_dict)
+
+               # write it
         headers = filtered[0].keys()
         with open(self.notes_file, "w", newline="") as tf:
             writer = csv.DictWriter(tf, headers, delimiter="\t")
