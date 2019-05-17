@@ -137,5 +137,37 @@ retreat and then retweet"
 2019-05-15T18:17:28.270413	test_specific	hallo, I am a specific note;
 2019-05-15T18:17:28.311728	test_specific	hallo, I am a specific note;
 2019-05-15T18:17:28.353076	test_specific	hallo, I am a specific note;
-2019-05-15T18:17:28.777268	note to replace	good replacement material
 2019-05-15T18:17:28.900163	test_note	Hello. I am the test note
+2019-05-16T15:59:03.123163	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.164528	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.205996	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.247068	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.288361	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.342735	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.398337	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.438487	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.479816	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:03.525069	test_specific	hallo, I am a specific note;
+2019-05-16T15:59:04.060005	find some note	this is searchable line
+2019-05-16T15:59:04.100295	find some note	other line, cant be found
+2019-05-16T15:59:04.141081	find other note	it should be searchable, I hope
+2019-05-16T15:59:04.223335	find some note	this is searchable line
+2019-05-16T15:59:04.263565	find some note	other line, cant be found
+2019-05-16T15:59:04.432334	test_note	Hello. I am the test note
+2019-05-16T17:35:23.010414	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.051371	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.095488	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.139031	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.184012	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.229100	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.273076	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.318786	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.378196	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.425554	test_specific	hallo, I am a specific note;
+2019-05-16T17:35:23.863810	note to replace	good replacement material
+2019-05-16T17:35:23.948341	find some note	this is searchable line
+2019-05-16T17:35:23.993601	find some note	other line, cant be found
+2019-05-16T17:35:24.034381	find other note	it should be searchable, I hope
+2019-05-16T17:35:24.125767	find some note	this is searchable line
+2019-05-16T17:35:24.166170	find some note	other line, cant be found
+2019-05-16T17:35:24.287883	test_note	Hello. I am the test note

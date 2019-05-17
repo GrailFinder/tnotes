@@ -10,6 +10,7 @@ TNotes	tnotes	/^class TNotes:$/;"	c
 TestTnotes	func_tests.py	/^class TestTnotes(unittest.TestCase):$/;"	c
 TestTsvNotes	tests.py	/^class TestTsvNotes(unittest.TestCase):$/;"	c
 __init__	tnotes	/^    def __init__(self, notes_file="default.tsv",$/;"	m	class:TNotes
+append_if_note	tnotes	/^        def append_if_note(row_di):$/;"	f	function:TNotes.replace_note
 args	tnotes	/^    args = init_flags()$/;"	v
 check_keys	tnotes	/^    def check_keys(di, keys):$/;"	m	class:TNotes
 columns	tests.py	/^    columns = ("title", "date", "note")$/;"	v	class:TestTsvNotes
@@ -22,6 +23,7 @@ init_flags	tnotes	/^def init_flags():$/;"	f
 read_notes	tnotes	/^    def read_notes(self, **kwargs):$/;"	m	class:TNotes
 replace_note	tnotes	/^    def replace_note(self, **kwargs):$/;"	m	class:TNotes
 run_cmd	func_tests.py	/^def run_cmd(args):$/;"	f
+search_for_text	tnotes	/^    def search_for_text(self, text):$/;"	m	class:TNotes
 setUp	tests.py	/^    def setUp(self):$/;"	m	class:TestTsvNotes
 tearDown	tests.py	/^    def tearDown(self):$/;"	m	class:TestTsvNotes
 test_delete_n_line	func_tests.py	/^    def test_delete_n_line(self):$/;"	m	class:TestTnotes
@@ -33,6 +35,8 @@ test_read_note	func_tests.py	/^    def test_read_note(self):$/;"	m	class:TestTno
 test_read_specific_note	func_tests.py	/^    def test_read_specific_note(self):$/;"	m	class:TestTnotes
 test_replace_n_line	func_tests.py	/^    def test_replace_n_line(self):$/;"	m	class:TestTnotes
 test_replace_note	func_tests.py	/^    def test_replace_note(self):$/;"	m	class:TestTnotes
+test_search_in_all_notes	func_tests.py	/^    def test_search_in_all_notes(self):$/;"	m	class:TestTnotes
+test_search_in_note	func_tests.py	/^    def test_search_in_note(self):$/;"	m	class:TestTnotes
 test_title_not_found	func_tests.py	/^    def test_title_not_found(self):$/;"	m	class:TestTnotes
 test_write_new	func_tests.py	/^    def test_write_new(self):$/;"	m	class:TestTnotes
 tnotes	tnotes	/^    tnotes = TNotes(**flags)$/;"	v

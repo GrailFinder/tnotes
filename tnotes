@@ -54,6 +54,11 @@ def init_flags():
         action="store_true",
         help="lists all titles"
     )
+    parser.add_argument(
+        "-s",
+        dest="search",
+        help="text to search in note with given title or all notes if title was not given"
+    )
 
     if len(os.sys.argv)==1:
         parser.print_help(os.sys.stderr)
@@ -68,6 +73,7 @@ class TNotes:
         self.notes_file = notes_file
         self.columns = columns
         self.index_to_return = None
+        self.title = None
 
         # hardcode
         self.create_notes_file()
@@ -78,16 +84,24 @@ class TNotes:
             if key not in self.columns:
                 nav_di.pop(key)
 
-        # read mode
+        # list titles 
         if "list_titles" in arg_di and arg_di["list_titles"]:
             self.get_all_titles()
             return
 
         # extract string from list
-        if "title" in nav_di and type(nav_di["title"]) is list:
+        if "title" in nav_di and nav_di["title"]:
             if len(nav_di["title"]) > 1:
                 self.index_to_return = nav_di["title"][1]
             nav_di["title"] = nav_di["title"][0]
+            # do I need that nav_di stuff?
+            self.title = nav_di["title"]
+
+        #search mode
+        if "search" in arg_di and arg_di["search"]:
+            text_to_search = arg_di["search"]
+            self.search_for_text(text_to_search)
+            return
 
 
         # write mode
@@ -218,11 +232,36 @@ class TNotes:
             append_if_note(row_dict)
 
                # write it
-        headers = filtered[0].keys()
+        if filtered:
+            headers = filtered[0].keys()
+        else:
+            headers = ["date", "title", "note"]
         with open(self.notes_file, "w", newline="") as tf:
             writer = csv.DictWriter(tf, headers, delimiter="\t")
             writer.writeheader()
             writer.writerows(filtered)
+
+    def search_for_text(self, text):
+        self.get_tsv_data()
+        # do we have title?
+        if self.title:
+            from operator import itemgetter
+            filtered = [row for row in self.data_tsv
+                        if row["title"] == self.title 
+                        and text in row["note"]]
+        else:
+            filtered = sorted([row for row in self.data_tsv
+                        if text in row["note"]],
+                        key=lambda di: di["title"])
+
+        # print title then notes, then next title and notes etc
+        title_flag = None
+        for row in filtered:
+            if row["title"] != title_flag:
+                print(row["title"])
+                title_flag = row["title"]
+            print("\t", row["note"])
+
 
 
     def get_input(self):
