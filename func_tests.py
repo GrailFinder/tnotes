@@ -4,7 +4,10 @@ import subprocess
 import unittest
 import os
 
-TNOTES = "/home/grail/projects/tnotes/tnotes"
+
+homepath = os.environ["HOME"]
+TNOTES = os.path.join(homepath, "projects/tnotes/tnotes")
+CONFIG = os.path.join(homepath, ".config/tnotes")
 
 def run_cmd(args):
     proc = subprocess.Popen(args,
@@ -37,11 +40,12 @@ class TestTnotes(unittest.TestCase):
 
     def setUp(self):
         self.file = "functest.tsv"
+        self.path = os.path.join(CONFIG, self.file)
         # tnotes creates test tsv file itself
         self.args = [TNOTES, "-f", self.file]
 
     def tearDown(self):
-        os.remove(self.file)
+        os.remove(self.path)
 
     def test_get_all_titles(self):
         self.args.extend(
