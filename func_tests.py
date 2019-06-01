@@ -52,7 +52,6 @@ class TestTnotes(unittest.TestCase):
                 ["test_note", "-w", "Hello. I am the test note"])
         out, err = run_cmd(self.args)
         self.assertEqual(b"", err)
-        self.assertNotEqual(b"", out)
 
         self.args[-3:] = ["-l"]
         out, err = run_cmd(self.args)
@@ -66,14 +65,19 @@ class TestTnotes(unittest.TestCase):
                 ["test_note", "-w", "Hello. I am the test note"])
         out, err = run_cmd(self.args)
         self.assertEqual(b"", err)
+        self.assertEqual(b"", out)
+
+        # read written note
+        out, err = run_cmd(self.args[:-2])
+        self.assertEqual(b"", err)
         self.assertNotEqual(b"", out)
+
 
     def test_read_note(self):
         self.args.extend(
                 ["test_note", "-w", "Hello. I am the test note"])
         out, err = run_cmd(self.args)
         self.assertEqual(b"", err)
-        self.assertNotEqual(b"", out)
 
         # create test_note first
         self.args[-2:] = []
@@ -115,9 +119,7 @@ class TestTnotes(unittest.TestCase):
         self.args.extend(["note to replace", "-w",
                 "bad note, replace later"])
         out, err = run_cmd(self.args)
-        self.assertNotEqual(b"", out)
         self.assertEqual(b"", err)
-        self.assertIn("bad note", str(out))
 
         #user replaces that note using -wr flag
         # returns updated note
@@ -139,7 +141,6 @@ class TestTnotes(unittest.TestCase):
         for res in results:
             out, err = res
             self.assertEqual(b"", err)
-            self.assertIn("old", str(out))
 
         # user changes second line
         self.args[-2:] = ["1", "-wr", "new text"]
@@ -154,16 +155,15 @@ class TestTnotes(unittest.TestCase):
         # user deletes that note alltogether
         self.args.append("-d")
         out, err = run_cmd(self.args)
-        self.assertEqual(b"", err) 
+        self.assertEqual(b"", err)
 
     def test_delete_note(self):
         # user creates bad note
         self.args.extend(["bad note to delete", "-w",
                 "pls delete me"])
         out, err = run_cmd(self.args)
-        self.assertNotEqual(b"", out)
         self.assertEqual(b"", err)
-        
+
         # user wants to delete that note
         self.args[-2:] = ["-d"]
         out, err = run_cmd(self.args)
@@ -222,7 +222,7 @@ class TestTnotes(unittest.TestCase):
 
         self.args[-2] = "find other note"
         run_cmd(self.args)
-        
+
 
     def test_search_in_note(self):
         # user creates note with n lines
