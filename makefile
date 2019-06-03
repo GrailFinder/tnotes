@@ -3,4 +3,6 @@ NAME = tnotes
 CWD = $(shell pwd)
 
 install:
-	@echo "$(CWD)/tnotes"
+	@ln -sf $(CWD)/tnotes /usr/local/bin/tnotes
+	@echo "created symlink: /usr/local/bin/tnotes"
+
