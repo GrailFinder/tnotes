@@ -3,7 +3,8 @@
 
 tnotes is a console notes manager that stores notes in tsv format.
 It might be useful for people who want do CRUD things to their notes in the terminal.
-
+By default tnotes creates /home/$USER/.config/tnotes/default.tsv for your notes you can provide different name by -f flag,
+then tnotes will work with ~/.config/tnotes/YOUR_FILE_NAME
 
 #### (screenshot might be helpful)
 
@@ -22,12 +23,11 @@ enter empty line to end input
 >this is way to write my ideas in several lines
 >but result would be stored in one index
 >
-this is way to write my ideas in several lines
-but result would be stored in one index
+
 $ tnotes new_idea -is
 you're writing in /home/grail/.config/tnotes/default.tsv,
 enter empty line to end input
->-is flag is similar to -i flag     
+>-is flag is similar to -i flag
 >but every line has its own index
 >
 ```
@@ -113,7 +113,7 @@ old_idea
 
 ## Usage
 ```
-    usage: tnotes [-h] [-f NOTES_FILE] [-w WRITE_MODE]  
+    usage: tnotes [-h] [-f NOTES_FILE] [-w WRITE_MODE]
     [-wr REPLACE_MODE] [-i]
                 [-is] [-d] [-l] [-s SEARCH]
                 [title [title ...]]
@@ -126,7 +126,7 @@ old_idea
 
     optional arguments:
     -h, --help        show this help message and exit
-    -f NOTES_FILE     tsv file to store your notes; consider  
+    -f NOTES_FILE     tsv file to store your notes; consider
                         difference in column titles
     -w WRITE_MODE     when given writes to file,
                      if given existing title - adds a note
