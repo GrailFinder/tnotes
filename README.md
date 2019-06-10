@@ -1,4 +1,4 @@
-### TNotes {version}
+### TNotes
 ===========
 
 tnotes is a console notes manager that stores notes in tsv format.
@@ -18,14 +18,14 @@ $ tnotes new_idea -w "it should have corrupt RNG as anywhere else"
 it should have corrupt RNG as anywhere else
 
 $ tnotes new_idea -i
-you're writing in /home/grail/.config/tnotes/default.tsv,
+you're writing in /home/$USER/.config/tnotes/default.tsv,
 enter empty line to end input
 >this is way to write my ideas in several lines
 >but result would be stored in one index
 >
 
 $ tnotes new_idea -is
-you're writing in /home/grail/.config/tnotes/default.tsv,
+you're writing in /home/$USER/.config/tnotes/default.tsv,
 enter empty line to end input
 >-is flag is similar to -i flag
 >but every line has its own index
@@ -63,7 +63,7 @@ new_idea
 
 # write new note
 $ tnotes old_idea -is
-you're writing in /home/grail/.config/tnotes/default.tsv,
+you're writing in /home/$USER/.config/tnotes/default.tsv,
 enter empty line to end input
 >corrupt RNG
 >buy socks
