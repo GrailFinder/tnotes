@@ -13,9 +13,7 @@ then tnotes will work with ~/.config/tnotes/YOUR_FILE_NAME
 ### Writing
 ```
 $ tnotes new_idea -w "I need to make online poker site and be rich"
-I need to make online poker site and be rich
 $ tnotes new_idea -w "it should have corrupt RNG as anywhere else"
-it should have corrupt RNG as anywhere else
 
 $ tnotes new_idea -i
 you're writing in /home/$USER/.config/tnotes/default.tsv,
@@ -106,8 +104,6 @@ new_idea
 	but result would be stored in one index
 old_idea
 1 	this is an old idea note
-
-
 ```
 
 
